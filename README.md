@@ -6,6 +6,7 @@ G-Bert combined the power of **G**raph Neural Networks and **BERT** (Bidirection
 
 ## Environment Setup to Reproduce the Experiment
 - Clone the repository
+- Move data from MIMIC-III and GAMENet. See Data Requirement section.
 - Create a Python Virtual Environment. I'm using Python 3.9. Refer to Virtual Environment Setup Section below.
 - Install Visual Studio 2019 Community and C++ Redistribution v14.0. https://visualstudio.microsoft.com/vs/older-downloads/
 - Install Cuda 11.3 https://developer.nvidia.com/cuda-11.3.0-download-archive
@@ -13,6 +14,18 @@ G-Bert combined the power of **G**raph Neural Networks and **BERT** (Bidirection
 - Edit torch_geometric/utils/scatter.py. See scatter instruction below.
 - run run_alternative.sh in /code/
 - Takes around ~6 hours to fully cycle 15 iterations on Nvidia GTX 1080 Ti GPU
+
+## Data Requirements
+Move the following artifacts to /data/
+- ehr_adj.pkl
+- RENAME data_final.pkl to data_gamenet.pkl
+- drug-atc.csv
+- ndc2atc_level4.csv
+- ndc2rxnorm_mapping.txt
+- data-multi-side.pkl
+- drug-DDI.csv
+- PRESCRIPTIONS.csv
+- DIAGNOSES_ICD.csv
 
 ## Cuda Install
 After installing the Cuda 11.3 toolkit, make sure you see it installed in shell.
