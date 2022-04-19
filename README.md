@@ -4,7 +4,65 @@ Pre-training of Graph Augmented Transformers for Medication Recommendation
 ## Intro
 G-Bert combined the power of **G**raph Neural Networks and **BERT** (Bidirectional Encoder Representations from Transformers) for medical code representation and medication recommendation. We use the graph neural networks (GNNs) to represent the structure information of medical codes from a medical ontology. Then we integrate the GNN representation into a transformer-based visit encoder and pre-train it on single-visit EHR data. The pre-trained visit encoder and representation can be fine-tuned for downstream medical prediction tasks. Our model is the first to bring the language model pre-training schema into the healthcare domain and it achieved state-of-the-art performance on the medication recommendation task.
 
+## Environment Setup to Reproduce the Experiment
+- Clone the repository
+- Create a Python Virtual Environment. I'm using Python 3.9. Refer to Virtual Environment Setup Section below.
+- Install Visual Studio 2019 Community and C++ Redistribution v14.0. https://visualstudio.microsoft.com/vs/older-downloads/
+- Install Cuda 11.3 https://developer.nvidia.com/cuda-11.3.0-download-archive
+- Pip install all the requirements. See the Pip section.
+- Edit torch_geometric/utils/scatter.py. See scatter instruction below.
+- run run_alternative.sh in /code/
+- Takes around ~6 hours to fully cycle 15 iterations on Nvidia GTX 1080 Ti GPU
+
+## Cuda Install
+After installing the Cuda 11.3 toolkit, make sure you see it installed in shell.
+```shell
+nvcc --version
+```
+
+## Python Virtual Environment Setup (use git bash if on Windows)
+```shell
+which python
+python3 -m venv PATH/TO/venv_gbert
+```
+cd to venv_gbert
+```shell
+cd Scripts
+source activate
+```
+
+## PIP Install
+While the virtual environment is active in your shell environment, execute the following pip commands.
+```shell
+python -m pip install --upgrade pip
+pip install wheel
+pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+pip install dill
+pip install jupyter
+pip install pandas
+pip install tqdm
+pip install tensorboardX
+pip install sklearn
+pip install torch_geometric==1.0.3
+pip install torch-scatter torch-sparse torch-cluster torch-spline-conv -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
+```
+
+## Source code modification: torch_geometric
+cd to venv_gbert
+```shell
+cd /venv_gbert/Lib/site-packages/torch_geometric/utils
+```
+edit scatter.py
+```
+add from torch_scatter import scatter
+replace: out = op(src, index, 0, None, dim_size, fill_value)
+to:  out = scatter(src, index, 0, None, dim_size)
+save and exit
+```
+
 ## Requirements
+- python 3.9 >=
+- Cuda enabled GPU
 - pytorch>=0.4
 - python>=3.5
 - torch_geometric==1.0.3
