@@ -5,6 +5,7 @@ Pre-training of Graph Augmented Transformers for Medication Recommendation
 G-Bert combined the power of **G**raph Neural Networks and **BERT** (Bidirectional Encoder Representations from Transformers) for medical code representation and medication recommendation. We use the graph neural networks (GNNs) to represent the structure information of medical codes from a medical ontology. Then we integrate the GNN representation into a transformer-based visit encoder and pre-train it on single-visit EHR data. The pre-trained visit encoder and representation can be fine-tuned for downstream medical prediction tasks. Our model is the first to bring the language model pre-training schema into the healthcare domain and it achieved state-of-the-art performance on the medication recommendation task.
 
 ## Environment Setup to Reproduce the Experiment
+- Clone the GAMENet repository to retrieve required pkl and mapping artifacts: https://github.com/davehuh/GAMENet
 - Clone the repository
 - Move data from MIMIC-III and GAMENet. See Data Requirement section.
 - Create a Python Virtual Environment. I'm using Python 3.9. Refer to Virtual Environment Setup Section below.
@@ -115,15 +116,6 @@ We list the structure of this repo as follows:
     └── [4.0K]  GBert-predict/ % model files to reproduce our result
         ├── [ 371]  bert_config.json 
         └── [ 12M]  pytorch_model.bin
-```
-### Preprocessing Data
-We have released the preprocessing codes named data/EDA.ipynb to process data using raw files from MIMIC-III dataset. You can download data files from [MIMIC](https://mimic.physionet.org/gettingstarted/dbsetup/) and get necessary mapping files from [GAMENet](https://github.com/sjy1203/GAMENet).
-
-### Quick Test
-To validate the performance of G-Bert, you can run the following script since we have provided the trained model binary file and well-preprocessed data.
-```bash
-cd code/
-python run_gbert.py --model_name GBert-predict --use_pretrain --pretrain_dir ../saved/GBert-predict --graph
 ```
 ## Cite 
 
