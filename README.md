@@ -16,6 +16,10 @@ G-Bert combined the power of **G**raph Neural Networks and **BERT** (Bidirection
 - run run_alternative.sh in /code/
 - Takes around ~6 hours to fully cycle 15 iterations on Nvidia GTX 1080 Ti GPU
 
+## MIMIC-III Access
+- Receive restricted access credentialing
+- Download the data: https://physionet.org/content/mimiciii/1.4/
+
 ## Data Requirements
 Move the following artifacts to /data/
 - ehr_adj.pkl
@@ -73,6 +77,20 @@ replace: out = op(src, index, 0, None, dim_size, fill_value)
 to:  out = scatter(src, index, 0, None, dim_size)
 save and exit
 ```
+
+## Run the main code: Training and Evaluation
+```shell
+cd /code
+./run_alternative.sh
+```
+
+## Results
+| Model               | Jaccard | F1     | PR-AUC |
+|---------------------|---------|--------|--------|
+| Logistic Regression | 0.3995  | 0.5392 | 0.6564 |
+| GRAM                | 0.4061  | 0.5547 | 0.6411 |
+| GAMENET             | 0.4352  | 0.6055 | 0.6774 |
+| G-BERT              | 0.4478  | 0.6068 | 0.6869 |
 
 ## Requirements
 - python 3.9 >=
